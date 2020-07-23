@@ -14,7 +14,8 @@ class SelectTableViewCell: UITableViewCell, UIPickerViewDataSource, UIPickerView
     @IBOutlet weak var selectPickerView: UIPickerView!
     
     var pickerArray = [Variant]()
-    var selectedIdStart = true
+    var selectedIndexStart = true
+    var selectedIndex = Int()
     var selectedID = Int()
     
     var item: NameTypeProtocol? {
@@ -23,14 +24,18 @@ class SelectTableViewCell: UITableViewCell, UIPickerViewDataSource, UIPickerView
                 return
             }
             pickerArray = item.variants
-            if selectedIdStart {
-                selectedID = item.selectedId
-                selectedIdStart = false
+            selectedID = item.selectedId
+            if selectedIndexStart {
+                //перевод id в индекс
+                if let index = pickerArray.firstIndex(where: {$0.id == selectedID}) {
+                    selectedIndex = index
+                }
+                selectedIndexStart = false
             }
             selectPickerView?.dataSource = self
             selectPickerView?.delegate = self
             DispatchQueue.main.async {
-                self.selectPickerView?.selectRow(self.selectedID, inComponent: 0, animated: true)
+                self.selectPickerView?.selectRow(self.selectedIndex, inComponent: 0, animated: true)
                 self.selectPickerView?.reloadAllComponents()
             }
         }
@@ -53,7 +58,8 @@ class SelectTableViewCell: UITableViewCell, UIPickerViewDataSource, UIPickerView
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        selectedID = row
-        NotificationCenter.default.post(name: Notification.Name("selectedPicker"), object: nil, userInfo: ["selector":row])
+        selectedIndex = row
+        //id селектора, а не индекс
+        NotificationCenter.default.post(name: Notification.Name("selectedPicker"), object: nil, userInfo: ["selector":pickerArray[row].id])
     }
 }

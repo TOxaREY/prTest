@@ -1,0 +1,4 @@
+https://pryaniky.com/static/json/sample.json
+https://chat.pryaniky.com/json/data-custom-order-much-more-items-in-data.json
+https://chat.pryaniky.com/json/data-default-order-custom-data-in-view.json
+https://chat.pryaniky.com/json/data-custom-selected-id.json

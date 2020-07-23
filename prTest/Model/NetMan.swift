@@ -11,7 +11,7 @@ import Foundation
 class NetMan {
     
     func request(completion: @escaping (Prjson) -> Void)  {
-        guard let url = URL(string: "https://pryaniky.com/static/json/sample.json".addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed)!) else { return }
+        guard let url = URL(string: "https://chat.pryaniky.com/json/data-custom-order-much-more-items-in-data.json".addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed)!) else { return }
         let request = URLRequest(url: url)
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
             guard let data = data else { return }
